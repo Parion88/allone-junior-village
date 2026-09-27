@@ -6,14 +6,12 @@ import { fetchMissions } from "../../api/missions";
 import { fetchSavingsGoals } from "../../api/savingsGoals";
 import Card from "../../components/common/Card";
 import BalanceCard from "../../components/common/BalanceCard";
-import CharacterBanner from "../../components/common/CharacterBanner";
-import alloneFriends from "../../assets/characters/allone-friends.png";
+import FriendCharacter from "../../components/common/FriendCharacter";
 
-const QUICK_ACTIONS = [
-  { label: "미션", helper: "달리와 도전", emoji: "🐶", to: "/child/missions", className: "bg-[#FFF2E6] text-[#A96A2A]" },
-  { label: "저축", helper: "올리와 차곡", emoji: "🌱", to: "/child/savings", className: "bg-[#E8F8EC] text-[#1C6F37]" },
-  { label: "배움", helper: "원이와 학습", emoji: "🐥", to: "/child/education", className: "bg-[#FFF6CC] text-[#B87900]" },
-  { label: "게임", helper: "친구들과 놀이", emoji: "🎮", to: "/child/game", className: "bg-[#EAF4FF] text-[#2F78B7]" },
+const MISSION_TONES = [
+  { bg: "from-[#EAF9E8] to-[#F7FFF0]", tag: "bg-[#2FB35A]", text: "text-[#17623C]", character: "oli" },
+  { bg: "from-[#FFF7CC] to-[#FFFDF0]", tag: "bg-[#F4B515]", text: "text-[#805900]", character: "woni" },
+  { bg: "from-[#EFE8FF] to-[#FAF7FF]", tag: "bg-[#8B62DF]", text: "text-[#5E42A0]", character: "kori" },
 ];
 
 export default function ChildDashboard() {
@@ -28,7 +26,7 @@ export default function ChildDashboard() {
     fetchBalance(user.id).then((d) => setBalance(d.balance));
     fetchMissions().then((list) => setMissions(list.filter((m) => m.status === "ACTIVE")));
     fetchSavingsGoals(user.id).then(setGoals);
-    fetchTransactions(user.id).then((list) => setRecentTx(list.slice(0, 5)));
+    fetchTransactions(user.id).then((list) => setRecentTx(list.slice(0, 4)));
   }, [user.id]);
 
   const primaryGoal = goals[0];
@@ -37,112 +35,159 @@ export default function ChildDashboard() {
     return Math.min(100, Math.round((primaryGoal.currentAmount / primaryGoal.targetAmount) * 100));
   }, [primaryGoal]);
 
-  return (
-    <div className="flex flex-col gap-4">
-      <CharacterBanner
-        title={`${user.name}님, 올원프렌즈와 오늘도 출발!`}
-        description="미션도 하고, 저축도 하고, 퀴즈도 풀면서 금융 습관을 키워봐요."
-        imageSrc={alloneFriends}
-        imageAlt="올원프렌즈 캐릭터"
-        actionLabel={missions.length > 0 ? "오늘 미션 보기" : "게임하러 가기"}
-        onAction={() => navigate(missions.length > 0 ? "/child/missions" : "/child/game")}
-      />
+  const weeklyCards = [
+    missions[0]
+      ? {
+          title: missions[0].title,
+          tag: "오늘의 미션",
+          helper: "완료하고 용돈 받아요!",
+          meta: `+${missions[0].rewardAmount.toLocaleString("ko-KR")}원`,
+          to: "/child/missions",
+        }
+      : {
+          title: "새 미션을 기다려요",
+          tag: "오늘의 미션",
+          helper: "부모님이 미션을 만들면 보여요!",
+          meta: "준비 중",
+          to: "/child/missions",
+        },
+    {
+      title: "어려운 금액과 거스름돈에 도전!",
+      tag: "생활 계산",
+      helper: "게임으로 돈 계산 연습",
+      meta: "게임 도전",
+      to: "/child/game",
+    },
+    {
+      title: "영수증의 수량까지 계산해봐!",
+      tag: "장보기 마스터",
+      helper: "한 단계 더 어려운 계산",
+      meta: "레벨 UP",
+      to: "/child/game",
+    },
+  ];
 
+  return (
+    <div className="flex flex-col gap-5">
       <BalanceCard balance={balance} />
 
-      <section>
-        <div className="mb-2 flex items-end justify-between">
+      <section className="rounded-[30px] bg-white p-4 shadow-card ring-1 ring-black/[0.03]">
+        <div className="mb-4 flex items-end justify-between gap-3">
           <div>
-            <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-junior-600">Allone Friends</p>
-            <h3 className="mt-0.5 text-base font-extrabold text-[#223127]">친구와 바로 시작하기</h3>
+            <p className="text-[11px] font-black tracking-[0.12em] text-junior-600">WEEKLY CHALLENGE</p>
+            <h2 className="mt-1 text-[22px] font-black text-[#17382A]">🌱 이번 주 미션</h2>
+            <p className="mt-1 text-xs font-semibold text-[#75827A]">미션과 게임을 완료하며 금융 감각을 키워봐요!</p>
           </div>
-          <span className="rounded-full bg-white px-3 py-1 text-xs font-bold text-[#617066] shadow-sm ring-1 ring-black/[0.04]">오늘도 한 걸음 ✨</span>
+          <button type="button" onClick={() => navigate("/child/missions")} className="shrink-0 rounded-full bg-[#E9F7EF] px-3 py-2 text-xs font-extrabold text-[#247A51]">
+            전체보기 ›
+          </button>
         </div>
 
-        <div className="grid grid-cols-2 gap-2.5">
-          {QUICK_ACTIONS.map((item) => (
-            <button
-              key={item.label}
-              type="button"
-              onClick={() => navigate(item.to)}
-              className="flex items-center gap-3 rounded-[22px] bg-white px-3 py-3 text-left shadow-card ring-1 ring-black/[0.03] transition active:scale-[0.98]"
-            >
-              <span className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl text-2xl ${item.className}`}>{item.emoji}</span>
-              <span className="min-w-0">
-                <span className="block text-sm font-extrabold text-[#344138]">{item.label}</span>
-                <span className="mt-0.5 block text-[11px] text-[#89938C]">{item.helper}</span>
-              </span>
-            </button>
-          ))}
+        <div className="grid grid-cols-3 gap-2.5">
+          {weeklyCards.map((item, index) => {
+            const tone = MISSION_TONES[index];
+            return (
+              <button
+                key={item.tag}
+                type="button"
+                onClick={() => navigate(item.to)}
+                className={`relative min-h-[205px] overflow-hidden rounded-[24px] bg-gradient-to-b ${tone.bg} p-3 text-left ring-1 ring-black/[0.03] transition active:scale-[0.98]`}
+              >
+                <div className="flex h-[60px] items-center justify-center">
+                  {index === 2 ? (
+                    <span className="text-[44px] drop-shadow-sm" aria-hidden="true">👑</span>
+                  ) : (
+                    <FriendCharacter name={tone.character} size={70} label={item.tag} />
+                  )}
+                </div>
+                <span className={`mt-1 inline-flex rounded-full px-2.5 py-1 text-[10px] font-black text-white ${tone.tag}`}>{item.tag}</span>
+                <p className="mt-2 line-clamp-3 text-[12px] font-black leading-[1.45] text-[#24352C]">{item.title}</p>
+                <p className="mt-1 line-clamp-2 text-[10px] font-semibold leading-4 text-[#7A867F]">{item.helper}</p>
+                <div className={`absolute bottom-3 left-3 text-[11px] font-black ${tone.text}`}>● {item.meta}</div>
+                <span className={`absolute bottom-2.5 right-3 text-lg font-black ${tone.text}`}>›</span>
+              </button>
+            );
+          })}
         </div>
       </section>
 
-      <Card className="!rounded-[26px] !p-0 overflow-hidden">
-        <div className="flex items-center justify-between border-b border-gray-100 px-4 py-4">
-          <div>
-            <p className="text-xs font-bold text-[#A96A2A]">달리의 오늘 할 일</p>
-            <h3 className="mt-0.5 font-extrabold text-[#223127]">미션을 완료하고 용돈 받아요</h3>
-          </div>
-          <button type="button" onClick={() => navigate("/child/missions")} className="text-xs font-bold text-junior-700">전체보기</button>
+      <button
+        type="button"
+        onClick={() => navigate("/child/education")}
+        className="relative min-h-[185px] overflow-hidden rounded-[30px] bg-gradient-to-br from-[#DDF3FF] via-[#EAF8FF] to-[#CFEFFF] p-5 text-left shadow-card ring-1 ring-[#CDE9F8] transition active:scale-[0.99]"
+      >
+        <div className="relative z-10 max-w-[58%]">
+          <p className="text-[11px] font-black tracking-[0.12em] text-[#3279BA]">MONEY SCHOOL</p>
+          <h2 className="mt-1 text-[24px] font-black text-[#174F7C]">🎓 금융 교육</h2>
+          <p className="mt-2 text-sm font-semibold leading-6 text-[#4E7090]">재미있는 금융 상식으로<br />똑똑한 어린이가 되어봐요!</p>
+          <span className="mt-4 inline-flex rounded-full bg-[#4C9BEF] px-4 py-2 text-xs font-black text-white shadow-sm">바로가기 ›</span>
         </div>
-        <div className="p-4">
-          {missions.length === 0 ? (
-            <div className="rounded-2xl bg-[#FFF8F1] px-4 py-5 text-center">
-              <div className="text-3xl" aria-hidden="true">🐶</div>
-              <p className="mt-2 text-sm font-bold text-[#344138]">지금은 진행 중인 미션이 없어요.</p>
-              <p className="mt-1 text-xs text-[#7A877E]">새 미션이 생기면 달리가 알려줄게요!</p>
+        <div className="absolute -bottom-3 right-2 z-10">
+          <FriendCharacter name="woni" size={132} label="금융 교육을 알려주는 원이" />
+        </div>
+        <div className="absolute bottom-5 right-[105px] text-3xl" aria-hidden="true">📚</div>
+        <div className="absolute right-8 top-5 text-3xl" aria-hidden="true">💡</div>
+        <div className="absolute left-[52%] top-8 text-xl" aria-hidden="true">⭐</div>
+      </button>
+
+      <Card className="relative overflow-hidden !rounded-[30px] bg-gradient-to-br from-[#F4FBEF] via-white to-[#E8F8DD] !p-5 ring-1 ring-[#DBEDD3]">
+        <div className="relative z-10 pr-24">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-[11px] font-black tracking-[0.12em] text-junior-600">MY SAVINGS</p>
+              <h2 className="mt-1 text-[22px] font-black text-[#195B3D]">🎯 나의 저축 목표</h2>
             </div>
+          </div>
+
+          {primaryGoal ? (
+            <>
+              <p className="mt-4 text-base font-black text-[#263B30]">{primaryGoal.emoji || "🎯"} {primaryGoal.title}</p>
+              <div className="mt-3 h-3 overflow-hidden rounded-full bg-[#E5ECE7]">
+                <div className="h-full rounded-full bg-gradient-to-r from-[#4AB765] to-[#85D359]" style={{ width: `${goalPct}%` }} />
+              </div>
+              <p className="mt-2 text-xs font-bold text-[#6F7E74]">
+                {primaryGoal.currentAmount.toLocaleString("ko-KR")}원 / {primaryGoal.targetAmount.toLocaleString("ko-KR")}원 ({goalPct}%)
+              </p>
+            </>
           ) : (
-            <ul className="flex flex-col gap-2.5">
-              {missions.slice(0, 3).map((m) => (
-                <li key={m.id} className="flex items-center justify-between gap-3 rounded-2xl bg-[#FFF9EC] px-3.5 py-3 ring-1 ring-amber-100">
-                  <div className="min-w-0">
-                    <p className="truncate text-sm font-extrabold text-[#344138]">{m.title}</p>
-                    <p className="mt-0.5 text-xs text-[#8B7960]">완료하면 바로 보상을 받을 수 있어요</p>
-                  </div>
-                  <span className="shrink-0 rounded-full bg-white px-3 py-1.5 text-xs font-extrabold text-amber-700 shadow-sm">+{m.rewardAmount.toLocaleString("ko-KR")}원</span>
-                </li>
-              ))}
-            </ul>
+            <>
+              <p className="mt-4 text-base font-black text-[#263B30]">갖고 싶은 것을 정해볼까요?</p>
+              <p className="mt-1 text-xs font-semibold text-[#7B897F]">작은 목표부터 시작하면 저축이 더 재미있어요.</p>
+            </>
           )}
+
+          <button type="button" onClick={() => navigate("/child/savings")} className="mt-4 rounded-full border border-[#BBDDBD] bg-white/80 px-4 py-2 text-xs font-black text-[#2B7650]">
+            {primaryGoal ? "목표 보기 ›" : "목표 만들기 ›"}
+          </button>
         </div>
+        <div className="absolute -bottom-2 right-0">
+          <FriendCharacter name="oli" size={120} label="저축을 응원하는 올리" />
+        </div>
+        <div className="absolute right-16 top-12 rotate-[-9deg] text-[11px] font-black text-[#348553]">조금씩<br />더 가까이!</div>
       </Card>
 
-      <Card className="!rounded-[26px] bg-gradient-to-br from-white to-[#F1FAF3]">
-        <div className="flex items-start justify-between gap-3">
-          <div>
-            <p className="text-xs font-bold text-junior-600">올리와 저축 성장</p>
-            <h3 className="mt-1 text-lg font-extrabold text-[#223127]">{primaryGoal ? `${primaryGoal.emoji || "🎯"} ${primaryGoal.title}` : "새로운 목표를 만들어봐요"}</h3>
-          </div>
-          {primaryGoal ? <span className="rounded-full bg-junior-100 px-3 py-1 text-xs font-extrabold text-junior-700">{goalPct}%</span> : null}
-        </div>
-        {primaryGoal ? (
-          <>
-            <div className="mt-4 h-3.5 overflow-hidden rounded-full bg-white ring-1 ring-junior-100">
-              <div className="h-full rounded-full bg-gradient-to-r from-junior-400 to-junior-600 transition-all" style={{ width: `${goalPct}%` }} />
-            </div>
-            <div className="mt-2 flex items-center justify-between text-xs">
-              <span className="font-bold text-[#617066]">{primaryGoal.currentAmount.toLocaleString("ko-KR")}원 모았어요</span>
-              <span className="text-[#89938C]">목표 {primaryGoal.targetAmount.toLocaleString("ko-KR")}원</span>
-            </div>
-            <button type="button" onClick={() => navigate("/child/savings")} className="mt-4 w-full rounded-2xl bg-junior-600 py-3 text-sm font-extrabold text-white shadow-sm transition active:scale-[0.98]">저금하러 가기</button>
-          </>
-        ) : (
-          <button type="button" onClick={() => navigate("/child/savings")} className="mt-4 w-full rounded-2xl bg-junior-600 py-3 text-sm font-extrabold text-white shadow-sm transition active:scale-[0.98]">저축 목표 만들기</button>
-        )}
-      </Card>
+      <div className="grid grid-cols-2 gap-3">
+        <button type="button" onClick={() => navigate("/meal")} className="relative overflow-hidden rounded-[24px] bg-gradient-to-br from-[#EEF7FF] to-white p-4 text-left shadow-card ring-1 ring-[#DCECF8]">
+          <p className="text-xs font-black text-[#3E81B3]">🏫 우리 학교</p>
+          <p className="mt-1 text-sm font-black text-[#2A3B45]">오늘 급식 보기</p>
+          <div className="absolute -bottom-3 right-0"><FriendCharacter name="kori" size={72} label="학교 안내 코리" /></div>
+        </button>
+        <button type="button" onClick={() => navigate("/child/game")} className="relative overflow-hidden rounded-[24px] bg-gradient-to-br from-[#FFF5EA] to-white p-4 text-left shadow-card ring-1 ring-[#F5E3D1]">
+          <p className="text-xs font-black text-[#B67238]">🎮 머니 게임</p>
+          <p className="mt-1 text-sm font-black text-[#2A3B45]">한 판 더 도전!</p>
+          <div className="absolute -bottom-3 right-0"><FriendCharacter name="dari" size={72} label="미션 도전 달리" /></div>
+        </button>
+      </div>
 
-      <Card className="!rounded-[26px]">
-        <div className="mb-3 flex items-center justify-between">
-          <div>
-            <p className="text-xs font-bold text-[#E17B36]">단지의 용돈 기록</p>
-            <h3 className="mt-0.5 font-extrabold text-[#223127]">최근 거래</h3>
+      {recentTx.length > 0 ? (
+        <Card className="!rounded-[28px]">
+          <div className="mb-3 flex items-center justify-between">
+            <div>
+              <p className="text-xs font-black text-[#DE6F97]">단지의 용돈 기록</p>
+              <h3 className="mt-0.5 font-black text-[#223127]">최근 거래</h3>
+            </div>
+            <FriendCharacter name="danji" size={52} label="용돈 기록 단지" />
           </div>
-          <span className="text-2xl" aria-hidden="true">🐷</span>
-        </div>
-        {recentTx.length === 0 ? (
-          <p className="rounded-2xl bg-[#FFF4F7] px-4 py-4 text-center text-sm text-[#89938C]">아직 받은 용돈이 없어요.</p>
-        ) : (
           <ul className="flex flex-col divide-y divide-gray-100">
             {recentTx.map((t) => {
               const isIncome = t.toUserId === user.id;
@@ -152,13 +197,15 @@ export default function ChildDashboard() {
                     <p className="truncate text-sm font-bold text-[#344138]">{t.memo || t.type}</p>
                     <p className="mt-0.5 text-xs text-[#99A29B]">{isIncome ? "받은 용돈" : "사용한 금액"}</p>
                   </div>
-                  <span className={`shrink-0 text-sm font-extrabold ${isIncome ? "text-junior-600" : "text-[#7A877E]"}`}>{isIncome ? "+" : "-"}{t.amount.toLocaleString("ko-KR")}원</span>
+                  <span className={`shrink-0 text-sm font-black ${isIncome ? "text-junior-600" : "text-[#7A877E]"}`}>
+                    {isIncome ? "+" : "-"}{t.amount.toLocaleString("ko-KR")}원
+                  </span>
                 </li>
               );
             })}
           </ul>
-        )}
-      </Card>
+        </Card>
+      ) : null}
     </div>
   );
 }
