@@ -4,35 +4,42 @@ import { logoutApi } from "../api/auth";
 import ParentDashboard from "./parent/ParentDashboard";
 import ChildDashboard from "./child/ChildDashboard";
 import alloneFriends from "../assets/characters/allone-friends.png";
-import { IconMission, IconBell, IconFamily, IconBook, IconGame, IconPiggyBank, IconMeal, IconSettings } from "../components/common/icons";
+import { IconMission, IconBell, IconFamily, IconMeal, IconSettings } from "../components/common/icons";
 import Avatar from "../components/common/Avatar";
+import FriendCharacter from "../components/common/FriendCharacter";
 
 const TILE_TONES = {
   parent: { icon: "bg-gradient-to-br from-parent-400 to-parent-600", text: "text-parent-700" },
-  junior: { icon: "bg-gradient-to-br from-junior-400 to-junior-600", text: "text-junior-700" },
   mission: { icon: "bg-gradient-to-br from-amber-400 to-amber-600", text: "text-amber-700" },
-  learn: { icon: "bg-gradient-to-br from-violet-400 to-violet-600", text: "text-violet-700" },
   meal: { icon: "bg-gradient-to-br from-rose-400 to-rose-600", text: "text-rose-700" },
 };
 
 function BottomMenuBar({ items, isParent }) {
   const navigate = useNavigate();
   return (
-    <nav className="fixed bottom-0 inset-x-0 z-20 pointer-events-none">
-      <div className="max-w-[480px] mx-auto bg-white/95 backdrop-blur border-t border-gray-100 shadow-[0_-8px_24px_rgba(15,30,20,0.08)] pb-[env(safe-area-inset-bottom)] pointer-events-auto">
+    <nav className="fixed inset-x-0 bottom-0 z-30 pointer-events-none">
+      <div className="mx-auto max-w-[480px] rounded-t-[28px] border-t border-white/80 bg-white/95 px-2 shadow-[0_-10px_32px_rgba(34,72,48,0.10)] backdrop-blur pb-[env(safe-area-inset-bottom)] pointer-events-auto">
         <div className="flex items-stretch">
-          {items.map((item) => {
-            const t = TILE_TONES[item.tone] || TILE_TONES.junior;
+          {items.map((item, index) => {
+            const t = TILE_TONES[item.tone] || TILE_TONES.parent;
+            const active = !isParent && index === 0;
             return (
               <button
                 key={item.label}
                 onClick={() => navigate(item.to)}
-                className="flex-1 min-w-0 flex flex-col items-center justify-center gap-1.5 py-2.5 active:scale-95 transition-transform"
+                className="flex min-w-0 flex-1 flex-col items-center justify-center gap-1 py-2.5 transition active:scale-95"
               >
-                <span className={`w-9 h-9 rounded-2xl flex items-center justify-center text-white shrink-0 shadow-sm ${t.icon}`}>
-                  <item.Icon width={17} height={17} />
+                <span
+                  className={`flex h-9 w-9 items-center justify-center rounded-2xl text-lg ${
+                    isParent ? `${t.icon} text-white shadow-sm` : active ? "bg-junior-600 text-white shadow-sm" : "bg-transparent text-[#5F6C63]"
+                  }`}
+                >
+                  {item.Icon ? <item.Icon width={17} height={17} /> : item.emoji}
                 </span>
-                <span className={`text-[11px] font-extrabold whitespace-nowrap ${isParent ? t.text : "text-[#56635A]"}`}>{item.label}</span>
+                <span className={`whitespace-nowrap text-[10px] font-extrabold ${active ? "text-junior-700" : isParent ? t.text : "text-[#68756C]"}`}>
+                  {item.label}
+                </span>
+                {active ? <span className="h-1 w-7 rounded-full bg-junior-600" /> : <span className="h-1" />}
               </button>
             );
           })}
@@ -50,12 +57,71 @@ const PARENT_MENU = [
 ];
 
 const CHILD_MENU = [
-  { Icon: IconMission, label: "미션", tone: "mission", to: "/child/missions" },
-  { Icon: IconPiggyBank, label: "저축목표", tone: "mission", to: "/child/savings" },
-  { Icon: IconMeal, label: "급식메뉴", tone: "meal", to: "/meal" },
-  { Icon: IconBook, label: "금융교육", tone: "learn", to: "/child/education" },
-  { Icon: IconGame, label: "게임", tone: "learn", to: "/child/game" },
+  { emoji: "🏠", label: "홈", to: "/home" },
+  { emoji: "⭐", label: "미션", to: "/child/missions" },
+  { emoji: "🐷", label: "저축목표", to: "/child/savings" },
+  { emoji: "📖", label: "금융교육", to: "/child/education" },
+  { emoji: "👤", label: "내 정보", to: "/settings" },
 ];
+
+function JuniorVillageHero({ user, onSettings }) {
+  return (
+    <section className="relative overflow-hidden bg-gradient-to-b from-[#7DCEF5] via-[#C9EDFF] to-[#EAF9DC] px-4 pb-12 pt-4">
+      <div className="pointer-events-none absolute -left-8 top-16 h-24 w-28 rounded-full bg-white/75 blur-[1px]" />
+      <div className="pointer-events-none absolute right-10 top-10 h-10 w-16 rounded-full bg-white/70" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#98D86A] via-[#BEEA90]/80 to-transparent" />
+      <div className="pointer-events-none absolute -bottom-8 -left-10 h-36 w-40 rounded-full bg-[#72BF52]/55" />
+      <div className="pointer-events-none absolute -bottom-10 right-[-35px] h-40 w-48 rounded-full bg-[#78C45A]/45" />
+
+      <div className="relative z-10 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <span className="text-2xl" aria-hidden="true">🌱</span>
+          <div>
+            <p className="text-lg font-black tracking-tight text-[#0B6B4B]">NH 올원뱅크</p>
+            <p className="text-[10px] font-extrabold tracking-[0.12em] text-[#267A5E]">JUNIOR VILLAGE</p>
+          </div>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="rounded-full bg-white/72 px-3 py-2 text-xs font-extrabold text-[#18714F] shadow-sm backdrop-blur">🏡 주니어빌리지</span>
+          <button
+            type="button"
+            onClick={onSettings}
+            aria-label="설정"
+            className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/78 text-[#18714F] shadow-sm ring-1 ring-white backdrop-blur"
+          >
+            <IconSettings width={20} height={20} />
+          </button>
+        </div>
+      </div>
+
+      <div className="relative z-10 mt-4 min-h-[220px]">
+        <div className="absolute left-0 top-4 z-20 w-[65%] rounded-[30px] bg-white/90 p-4 shadow-[0_14px_30px_rgba(49,110,71,0.16)] ring-1 ring-white backdrop-blur">
+          <div className="flex items-center gap-3">
+            <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-[#E6F7D8] ring-4 ring-white">
+              <FriendCharacter name="oli" size={64} label="올리" />
+            </div>
+            <div className="min-w-0">
+              <p className="truncate text-[17px] font-black text-[#173A2B]">{user.name} 어린이 🌱</p>
+              <p className="mt-1 text-xs font-semibold leading-5 text-[#6B7A70]">오늘도 신나게 성장하는 너를 응원해요!</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="absolute right-[-6px] top-10 z-10 h-[190px] w-[215px]">
+          <img src={alloneFriends} alt="올원프렌즈" className="h-full w-full object-contain drop-shadow-xl" />
+        </div>
+
+        <div className="absolute bottom-0 right-[120px] z-20 rotate-[-4deg] rounded-[18px] bg-white/88 px-3 py-2 text-center text-[11px] font-extrabold leading-4 text-[#18714F] shadow-md">
+          우리 같이 해봐요!
+          <span className="absolute -bottom-2 right-4 h-4 w-4 rotate-45 bg-white/88" />
+        </div>
+
+        <div className="pointer-events-none absolute bottom-0 left-2 z-0 text-5xl opacity-80" aria-hidden="true">🌳</div>
+        <div className="pointer-events-none absolute bottom-1 right-0 z-0 text-5xl opacity-80" aria-hidden="true">🏫</div>
+      </div>
+    </section>
+  );
+}
 
 export default function Home() {
   const { user, logout } = useAuthStore();
@@ -72,67 +138,44 @@ export default function Home() {
     navigate("/");
   };
 
-  return (
-    <div className={`flex min-h-screen flex-col ${isParent ? "bg-[#F5F8FB]" : "bg-[#F6FAF7]"}`}>
-      <div className={`relative overflow-hidden ${isParent ? "bg-gradient-to-r from-parent-800 to-parent-600" : "bg-gradient-to-br from-[#E8F8EC] via-[#F5FBE8] to-[#FFF6CC]"}`}>
-        <div className="flex min-h-[150px] items-center justify-between gap-3 px-4 py-4">
-          <div className={`${isParent ? "text-white" : "text-[#223127]"} min-w-0 flex-1`}>
-            <div className="flex items-center gap-3">
-              <Avatar
-                value={user.avatarEmoji}
-                className={`w-11 h-11 shadow-sm ${isParent ? "ring-2 ring-white/60" : "ring-2 ring-white"}`}
-                textClassName="text-3xl"
-              />
-              <div className="min-w-0">
-                <p className={`text-[11px] font-bold tracking-wide ${isParent ? "text-white/75" : "text-junior-700"}`}>
-                  {isParent ? "PARENT MODE" : "JUNIOR VILLAGE"}
-                </p>
-                <p className="mt-0.5 truncate font-extrabold leading-tight">{user.name}님, 안녕하세요!</p>
-                <p className={`mt-1 text-xs ${isParent ? "text-white/80" : "text-[#617066]"}`}>
-                  {isParent ? "아이의 금융 습관을 함께 만들어가요" : "올원프렌즈와 오늘도 재미있게 배우고 모아봐요"}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {!isParent ? (
-            <img
-              src={alloneFriends}
-              alt="올원프렌즈"
-              className="h-[105px] w-[150px] shrink-0 object-contain object-right drop-shadow-sm"
-            />
-          ) : null}
-
-          <button
-            onClick={() => navigate("/settings")}
-            aria-label="설정"
-            className={`tap-target absolute right-3 top-3 flex items-center justify-center rounded-2xl ${
-              isParent ? "bg-white/12 text-white ring-1 ring-white/20" : "bg-white/80 text-junior-700 ring-1 ring-black/[0.04]"
-            } backdrop-blur`}
-          >
-            <IconSettings width={21} height={21} />
-          </button>
-        </div>
+  if (!isParent) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-[#F9FCFF] via-white to-[#F4FAF5]">
+        <JuniorVillageHero user={user} onSettings={() => navigate("/settings")} />
+        <main className="relative z-20 -mt-7 flex flex-col gap-4 px-4 pb-32">
+          <ChildDashboard />
+          <button onClick={handleLogout} className="py-3 text-sm font-medium text-gray-400 underline underline-offset-2">로그아웃</button>
+        </main>
+        <BottomMenuBar items={CHILD_MENU} isParent={false} />
       </div>
+    );
+  }
 
-      <div className="p-4 flex flex-col gap-4 pb-28">
-        <div className="flex items-end justify-between mt-1">
+  return (
+    <div className="flex min-h-screen flex-col bg-[#F5F8FB]">
+      <div className="relative overflow-hidden bg-gradient-to-r from-parent-800 to-parent-600 px-4 py-5 text-white">
+        <div className="flex items-center gap-3">
+          <Avatar value={user.avatarEmoji} className="h-11 w-11 ring-2 ring-white/60 shadow-sm" textClassName="text-3xl" />
           <div>
-            <p className={`text-[11px] font-bold uppercase tracking-[0.16em] ${isParent ? "text-parent-500" : "text-junior-600"}`}>
-              {isParent ? "Family Overview" : "My Village"}
-            </p>
-            <h2 className="mt-0.5 font-extrabold text-[#263129]">{isParent ? "우리 아이들" : "나의 오늘"}</h2>
+            <p className="text-[11px] font-bold tracking-wide text-white/75">PARENT MODE</p>
+            <p className="mt-0.5 font-extrabold">{user.name}님, 안녕하세요!</p>
+            <p className="mt-1 text-xs text-white/80">아이의 금융 습관을 함께 만들어가요</p>
           </div>
         </div>
-
-        {isParent ? <ParentDashboard /> : <ChildDashboard />}
-
-        <button onClick={handleLogout} className="text-gray-400 text-sm font-medium py-3 mt-2 underline underline-offset-2">
-          로그아웃
+        <button onClick={() => navigate("/settings")} aria-label="설정" className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-2xl bg-white/12 text-white ring-1 ring-white/20 backdrop-blur">
+          <IconSettings width={21} height={21} />
         </button>
       </div>
 
-      <BottomMenuBar items={isParent ? PARENT_MENU : CHILD_MENU} isParent={isParent} />
+      <div className="flex flex-col gap-4 p-4 pb-28">
+        <div>
+          <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-parent-500">Family Overview</p>
+          <h2 className="mt-0.5 font-extrabold text-[#263129]">우리 아이들</h2>
+        </div>
+        <ParentDashboard />
+        <button onClick={handleLogout} className="mt-2 py-3 text-sm font-medium text-gray-400 underline underline-offset-2">로그아웃</button>
+      </div>
+      <BottomMenuBar items={PARENT_MENU} isParent />
     </div>
   );
 }
