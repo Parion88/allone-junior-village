@@ -3,7 +3,6 @@ import { useAuthStore } from "../store/authStore";
 import { logoutApi } from "../api/auth";
 import ParentDashboard from "./parent/ParentDashboard";
 import ChildDashboard from "./child/ChildDashboard";
-import alloneFriends from "../assets/characters/allone-friends.png";
 import { IconMission, IconBell, IconFamily, IconMeal, IconSettings } from "../components/common/icons";
 import Avatar from "../components/common/Avatar";
 import FriendCharacter from "../components/common/FriendCharacter";
@@ -24,21 +23,11 @@ function BottomMenuBar({ items, isParent }) {
             const t = TILE_TONES[item.tone] || TILE_TONES.parent;
             const active = !isParent && index === 0;
             return (
-              <button
-                key={item.label}
-                onClick={() => navigate(item.to)}
-                className="flex min-w-0 flex-1 flex-col items-center justify-center gap-1 py-2.5 transition active:scale-95"
-              >
-                <span
-                  className={`flex h-9 w-9 items-center justify-center rounded-2xl text-lg ${
-                    isParent ? `${t.icon} text-white shadow-sm` : active ? "bg-junior-600 text-white shadow-sm" : "bg-transparent text-[#5F6C63]"
-                  }`}
-                >
+              <button key={item.label} onClick={() => navigate(item.to)} className="flex min-w-0 flex-1 flex-col items-center justify-center gap-1 py-2.5 transition active:scale-95">
+                <span className={`flex h-9 w-9 items-center justify-center rounded-2xl text-lg ${isParent ? `${t.icon} text-white shadow-sm` : active ? "bg-junior-600 text-white shadow-sm" : "bg-transparent text-[#5F6C63]"}`}>
                   {item.Icon ? <item.Icon width={17} height={17} /> : item.emoji}
                 </span>
-                <span className={`whitespace-nowrap text-[10px] font-extrabold ${active ? "text-junior-700" : isParent ? t.text : "text-[#68756C]"}`}>
-                  {item.label}
-                </span>
+                <span className={`whitespace-nowrap text-[10px] font-extrabold ${active ? "text-junior-700" : isParent ? t.text : "text-[#68756C]"}`}>{item.label}</span>
                 {active ? <span className="h-1 w-7 rounded-full bg-junior-600" /> : <span className="h-1" />}
               </button>
             );
@@ -66,39 +55,34 @@ const CHILD_MENU = [
 
 function JuniorVillageHero({ user, onSettings }) {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-[#7DCEF5] via-[#C9EDFF] to-[#EAF9DC] px-4 pb-12 pt-4">
-      <div className="pointer-events-none absolute -left-8 top-16 h-24 w-28 rounded-full bg-white/75 blur-[1px]" />
-      <div className="pointer-events-none absolute right-10 top-10 h-10 w-16 rounded-full bg-white/70" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#98D86A] via-[#BEEA90]/80 to-transparent" />
-      <div className="pointer-events-none absolute -bottom-8 -left-10 h-36 w-40 rounded-full bg-[#72BF52]/55" />
-      <div className="pointer-events-none absolute -bottom-10 right-[-35px] h-40 w-48 rounded-full bg-[#78C45A]/45" />
+    <section className="relative overflow-hidden bg-gradient-to-b from-[#78CCF3] via-[#C9EDFF] to-[#EAF9DC] px-4 pb-14 pt-4">
+      <div className="pointer-events-none absolute -left-10 top-16 h-24 w-32 rounded-full bg-white/75" />
+      <div className="pointer-events-none absolute right-8 top-12 h-12 w-20 rounded-full bg-white/70" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#8FD565] via-[#BCEB8D]/85 to-transparent" />
+      <div className="pointer-events-none absolute -bottom-10 -left-8 h-36 w-48 rounded-full bg-[#6FBE50]/55" />
+      <div className="pointer-events-none absolute -bottom-12 right-[-35px] h-44 w-56 rounded-full bg-[#79C85B]/50" />
 
-      <div className="relative z-10 flex items-center justify-between">
+      <div className="relative z-20 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="text-2xl" aria-hidden="true">🌱</span>
           <div>
             <p className="text-lg font-black tracking-tight text-[#0B6B4B]">NH 올원뱅크</p>
-            <p className="text-[10px] font-extrabold tracking-[0.12em] text-[#267A5E]">JUNIOR VILLAGE</p>
+            <p className="text-[10px] font-extrabold tracking-[0.15em] text-[#267A5E]">JUNIOR VILLAGE</p>
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <span className="rounded-full bg-white/72 px-3 py-2 text-xs font-extrabold text-[#18714F] shadow-sm backdrop-blur">🏡 주니어빌리지</span>
-          <button
-            type="button"
-            onClick={onSettings}
-            aria-label="설정"
-            className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/78 text-[#18714F] shadow-sm ring-1 ring-white backdrop-blur"
-          >
+          <span className="rounded-full bg-white/75 px-3 py-2 text-xs font-extrabold text-[#18714F] shadow-sm backdrop-blur">🏡 주니어빌리지</span>
+          <button type="button" onClick={onSettings} aria-label="설정" className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/80 text-[#18714F] shadow-sm ring-1 ring-white backdrop-blur">
             <IconSettings width={20} height={20} />
           </button>
         </div>
       </div>
 
-      <div className="relative z-10 mt-4 min-h-[220px]">
-        <div className="absolute left-0 top-4 z-20 w-[65%] rounded-[30px] bg-white/90 p-4 shadow-[0_14px_30px_rgba(49,110,71,0.16)] ring-1 ring-white backdrop-blur">
+      <div className="relative z-10 mt-4 min-h-[260px]">
+        <div className="absolute left-0 top-3 z-20 w-[61%] rounded-[30px] bg-white/92 p-4 shadow-[0_14px_30px_rgba(49,110,71,0.16)] ring-1 ring-white backdrop-blur">
           <div className="flex items-center gap-3">
-            <div className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-[#E6F7D8] ring-4 ring-white">
-              <FriendCharacter name="oli" size={64} label="올리" />
+            <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#E6F7D8] ring-4 ring-white">
+              <FriendCharacter name="oli" size={58} label="올리" />
             </div>
             <div className="min-w-0">
               <p className="truncate text-[17px] font-black text-[#173A2B]">{user.name} 어린이 🌱</p>
@@ -107,17 +91,19 @@ function JuniorVillageHero({ user, onSettings }) {
           </div>
         </div>
 
-        <div className="absolute right-[-6px] top-10 z-10 h-[190px] w-[215px]">
-          <img src={alloneFriends} alt="올원프렌즈" className="h-full w-full object-contain drop-shadow-xl" />
+        <div className="absolute right-[-2px] top-[86px] z-10 flex items-end gap-[-8px]">
+          <FriendCharacter name="danji" size={88} className="translate-x-5 translate-y-3" label="단지" />
+          <FriendCharacter name="oli" size={122} className="relative z-20" label="올리" />
+          <FriendCharacter name="woni" size={92} className="-translate-x-5 translate-y-2" label="원이" />
         </div>
 
-        <div className="absolute bottom-0 right-[120px] z-20 rotate-[-4deg] rounded-[18px] bg-white/88 px-3 py-2 text-center text-[11px] font-extrabold leading-4 text-[#18714F] shadow-md">
+        <div className="absolute bottom-4 right-[126px] z-20 rotate-[-4deg] rounded-[18px] bg-white/90 px-3 py-2 text-center text-[11px] font-extrabold leading-4 text-[#18714F] shadow-md">
           우리 같이 해봐요!
-          <span className="absolute -bottom-2 right-4 h-4 w-4 rotate-45 bg-white/88" />
+          <span className="absolute -bottom-2 right-4 h-4 w-4 rotate-45 bg-white/90" />
         </div>
 
-        <div className="pointer-events-none absolute bottom-0 left-2 z-0 text-5xl opacity-80" aria-hidden="true">🌳</div>
-        <div className="pointer-events-none absolute bottom-1 right-0 z-0 text-5xl opacity-80" aria-hidden="true">🏫</div>
+        <div className="pointer-events-none absolute bottom-0 left-3 text-5xl opacity-80" aria-hidden="true">🌳</div>
+        <div className="pointer-events-none absolute bottom-0 right-2 text-5xl opacity-80" aria-hidden="true">🏫</div>
       </div>
     </section>
   );
@@ -129,11 +115,7 @@ export default function Home() {
   const isParent = user.role === "PARENT";
 
   const handleLogout = async () => {
-    try {
-      await logoutApi();
-    } catch (e) {
-      // 네트워크 오류가 있어도 클라이언트 상태는 로그아웃 처리
-    }
+    try { await logoutApi(); } catch (e) {}
     logout();
     navigate("/");
   };
@@ -162,16 +144,10 @@ export default function Home() {
             <p className="mt-1 text-xs text-white/80">아이의 금융 습관을 함께 만들어가요</p>
           </div>
         </div>
-        <button onClick={() => navigate("/settings")} aria-label="설정" className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-2xl bg-white/12 text-white ring-1 ring-white/20 backdrop-blur">
-          <IconSettings width={21} height={21} />
-        </button>
+        <button onClick={() => navigate("/settings")} aria-label="설정" className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-2xl bg-white/12 text-white ring-1 ring-white/20 backdrop-blur"><IconSettings width={21} height={21} /></button>
       </div>
-
       <div className="flex flex-col gap-4 p-4 pb-28">
-        <div>
-          <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-parent-500">Family Overview</p>
-          <h2 className="mt-0.5 font-extrabold text-[#263129]">우리 아이들</h2>
-        </div>
+        <div><p className="text-[11px] font-bold uppercase tracking-[0.16em] text-parent-500">Family Overview</p><h2 className="mt-0.5 font-extrabold text-[#263129]">우리 아이들</h2></div>
         <ParentDashboard />
         <button onClick={handleLogout} className="mt-2 py-3 text-sm font-medium text-gray-400 underline underline-offset-2">로그아웃</button>
       </div>
