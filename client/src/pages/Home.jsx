@@ -3,7 +3,7 @@ import { useAuthStore } from "../store/authStore";
 import { logoutApi } from "../api/auth";
 import ParentDashboard from "./parent/ParentDashboard";
 import ChildDashboard from "./child/ChildDashboard";
-import mainImage from "../assets/mainimage.png";
+import alloneFriends from "../assets/characters/allone-friends.png";
 import { IconMission, IconBell, IconFamily, IconBook, IconGame, IconPiggyBank, IconMeal, IconSettings } from "../components/common/icons";
 import Avatar from "../components/common/Avatar";
 
@@ -74,29 +74,43 @@ export default function Home() {
 
   return (
     <div className={`flex min-h-screen flex-col ${isParent ? "bg-[#F5F8FB]" : "bg-[#F6FAF7]"}`}>
-      <div className="relative overflow-hidden">
-        <img src={mainImage} alt="주니어빌리지" className="w-full h-32 object-cover" />
-        <div
-          className={`absolute inset-0 bg-gradient-to-r ${
-            isParent
-              ? "from-parent-900/76 via-parent-800/48 to-parent-700/15"
-              : "from-[#154F2C]/78 via-[#22733E]/52 to-[#2FAE55]/16"
-          } flex items-center justify-between px-4`}
-        >
-          <div className="flex items-center gap-3 text-white">
-            <Avatar value={user.avatarEmoji} className="w-11 h-11 ring-2 ring-white/60 shadow-sm" textClassName="text-3xl" />
-            <div>
-              <p className="text-[11px] font-bold tracking-wide text-white/75">{isParent ? "PARENT MODE" : "JUNIOR VILLAGE"}</p>
-              <p className="mt-0.5 font-extrabold leading-tight">{user.name}님, 안녕하세요!</p>
-              <p className="mt-0.5 text-xs text-white/80">{isParent ? "아이의 금융 습관을 함께 만들어가요" : "오늘도 재미있게 배우고 모아봐요"}</p>
+      <div className={`relative overflow-hidden ${isParent ? "bg-gradient-to-r from-parent-800 to-parent-600" : "bg-gradient-to-br from-[#E8F8EC] via-[#F5FBE8] to-[#FFF6CC]"}`}>
+        <div className="flex min-h-[150px] items-center justify-between gap-3 px-4 py-4">
+          <div className={`${isParent ? "text-white" : "text-[#223127]"} min-w-0 flex-1`}>
+            <div className="flex items-center gap-3">
+              <Avatar
+                value={user.avatarEmoji}
+                className={`w-11 h-11 shadow-sm ${isParent ? "ring-2 ring-white/60" : "ring-2 ring-white"}`}
+                textClassName="text-3xl"
+              />
+              <div className="min-w-0">
+                <p className={`text-[11px] font-bold tracking-wide ${isParent ? "text-white/75" : "text-junior-700"}`}>
+                  {isParent ? "PARENT MODE" : "JUNIOR VILLAGE"}
+                </p>
+                <p className="mt-0.5 truncate font-extrabold leading-tight">{user.name}님, 안녕하세요!</p>
+                <p className={`mt-1 text-xs ${isParent ? "text-white/80" : "text-[#617066]"}`}>
+                  {isParent ? "아이의 금융 습관을 함께 만들어가요" : "올원프렌즈와 오늘도 재미있게 배우고 모아봐요"}
+                </p>
+              </div>
             </div>
           </div>
+
+          {!isParent ? (
+            <img
+              src={alloneFriends}
+              alt="올원프렌즈"
+              className="h-[105px] w-[150px] shrink-0 object-contain object-right drop-shadow-sm"
+            />
+          ) : null}
+
           <button
             onClick={() => navigate("/settings")}
             aria-label="설정"
-            className="tap-target rounded-2xl bg-white/12 hover:bg-white/20 active:bg-white/30 flex items-center justify-center text-white ring-1 ring-white/20 backdrop-blur"
+            className={`tap-target absolute right-3 top-3 flex items-center justify-center rounded-2xl ${
+              isParent ? "bg-white/12 text-white ring-1 ring-white/20" : "bg-white/80 text-junior-700 ring-1 ring-black/[0.04]"
+            } backdrop-blur`}
           >
-            <IconSettings width={22} height={22} />
+            <IconSettings width={21} height={21} />
           </button>
         </div>
       </div>
