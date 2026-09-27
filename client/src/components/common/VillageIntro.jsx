@@ -1,3 +1,4 @@
+import FriendCharacter from "./FriendCharacter";
 import VillageCharacter from "./VillageCharacter";
 const scenes = {
   "나의 미션": ["오늘도 한 뼘 더 성장!", "작은 약속을 지키고 용돈도 모아봐요.", "celebrate", "lemon"],
@@ -13,11 +14,17 @@ const scenes = {
   "알림함": ["우리 아이의 새로운 소식", "미션과 용돈 소식을 한곳에서 확인해요.", "save", "sky"],
   "심부름 지폐 계산": ["돈 계산, 놀이처럼 재미있게!", "금액 맞추기부터 장보기까지 도전해봐요.", "save", "lemon"],
 };
+const guideFriends = {
+  "나의 미션": ["kori", 2], "저축 목표": ["danji", 0], "금융교육": ["woni", 2],
+  "배움 콘텐츠": ["woni", 2], "오늘의 퀴즈": ["dari", 0], "매달의 출석현황": ["woni", 1],
+  "설정": ["oli", 0], "미션 관리": ["oli", 2], "자녀 계정 관리": ["danji", 1], "알림함": ["kori", 2],
+};
 export default function VillageIntro({ title, description, pose, tone, compact = false }) {
   const scene = scenes[title] || [title, description, pose || "hello", tone || "mint"];
+  const guide = guideFriends[title];
   return <section className={`village-intro scene-${tone || scene[3]} ${compact ? "is-compact" : ""}`}>
     <div className="village-intro-copy"><span className="village-eyebrow">올원 주니어빌리지</span>
       <h2>{scene[0]}</h2><p>{description || scene[1]}</p></div>
-    <VillageCharacter pose={pose || scene[2]} className="village-intro-friend" decorative />
+    {guide ? <FriendCharacter name={guide[0]} pose={guide[1]} className="village-intro-friend" decorative /> : <VillageCharacter pose={pose || scene[2]} className="village-intro-friend" decorative />}
   </section>;
 }

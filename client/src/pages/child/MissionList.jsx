@@ -1,3 +1,5 @@
+import FriendCharacter from "../../components/common/FriendCharacter";
+import { missionFriend } from "../../data/friendCharacters";
 import { useEffect, useState } from "react";
 import BackHeader from "../../components/common/BackHeader";
 import Card from "../../components/common/Card";
@@ -67,7 +69,7 @@ export default function MissionList() {
           return (
             <Card key={m.id}>
               <div className="flex justify-between items-start mb-1">
-                <p className="font-bold text-gray-800">{m.title}</p>
+                <div className="mission-title-art"><FriendCharacter {...missionFriend(m.title)} size={58} decorative /><p className="font-bold text-gray-800">{m.title}</p></div>
                 <span className={`text-xs rounded-full px-2 py-1 font-semibold ${STATUS_LABEL[m.status]?.cls}`}>
                   {STATUS_LABEL[m.status]?.text}
                 </span>

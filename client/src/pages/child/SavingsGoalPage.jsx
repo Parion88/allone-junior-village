@@ -1,3 +1,5 @@
+import GoalIllustration from "../../components/common/GoalIllustration";
+import { resolveGoalVisual } from "../../data/goalVisuals";
 import { useEffect, useState } from "react";
 import BackHeader from "../../components/common/BackHeader";
 import Card from "../../components/common/Card";
@@ -87,9 +89,7 @@ export default function SavingsGoalPage() {
           const pct = Math.min(100, Math.round((g.currentAmount / g.targetAmount) * 100));
           return (
             <Card key={g.id}>
-              <p className="font-bold text-gray-800 text-sm mb-1.5">
-                {g.emoji || "🎯"} {g.title}
-              </p>
+              <div className="goal-card-heading"><div><span className="village-eyebrow">내가 모으는 꿈</span><h2>{g.title}</h2></div><GoalIllustration title={g.title} emoji={g.emoji} size={92} /></div>
               {(g.startDate || g.targetDate) && (
                 <p className="text-xs text-gray-400 mb-2">
                   {g.startDate ? `🗓 ${formatDot(g.startDate)} 시작` : ""}
@@ -135,12 +135,13 @@ export default function SavingsGoalPage() {
         {showForm && (
           <Card>
             <form onSubmit={handleCreate} className="flex flex-col gap-3">
-              <p className="text-sm font-medium text-gray-600">목표 이모지</p>
+              <div className="goal-live-preview"><GoalIllustration title={form.title} emoji={form.emoji} size={88} /><div><strong>{form.title || "어떤 꿈을 모아볼까요?"}</strong><p>{resolveGoalVisual(form.title, form.emoji).matchedBy === "title" ? "목표 이름에 어울리는 그림이에요" : "목표를 입력하면 어울리는 그림을 보여줘요"}</p></div></div>
+              <p className="text-sm font-medium text-gray-600">기본 목표 이모지</p>
               <EmojiPicker value={form.emoji} onChange={(e) => setForm({ ...form, emoji: e })} mode="goal" />
 
               <input
                 required
-                placeholder="목표 이름 (예: 자전거 사기)"
+                placeholder="목표 이름 (예: 닌텐도 스위치 사기)"
                 value={form.title}
                 onChange={(e) => setForm({ ...form, title: e.target.value })}
                 className="tap-target border-2 border-gray-200 rounded-xl px-3 py-3 text-sm"
@@ -189,6 +190,7 @@ export default function SavingsGoalPage() {
       {reward && (
         <ConfettiReward
           emoji={reward.achieved ? "🏆" : reward.emoji || "🐷"}
+          illustration={<GoalIllustration title={reward.title} emoji={reward.emoji} size={140} />}
           title={reward.achieved ? `목표 달성!\n"${reward.title}"` : `${reward.amount.toLocaleString("ko-KR")}원 저금했어요!`}
           subtitle={reward.achieved ? "축하해요! 목표 금액을 모두 모았어요 🎉" : `현재 달성률 ${reward.pct}%`}
           onClose={() => setReward(null)}

@@ -1,0 +1,211 @@
+{
+  "checks": [
+    {
+      "name": "login",
+      "overflow": false,
+      "broken": [],
+      "heading": "우리 아이의 첫 금융 마을"
+    },
+    {
+      "name": "home",
+      "overflow": false,
+      "broken": [],
+      "heading": "이준 어린이 🌱"
+    },
+    {
+      "name": "missions",
+      "overflow": false,
+      "broken": [],
+      "heading": "나의 미션"
+    },
+    {
+      "name": "savings",
+      "overflow": false,
+      "broken": [],
+      "heading": "저축 목표"
+    },
+    {
+      "name": "education",
+      "overflow": false,
+      "broken": [],
+      "heading": "금융교육"
+    },
+    {
+      "name": "learn",
+      "overflow": false,
+      "broken": [],
+      "heading": "배움 콘텐츠"
+    },
+    {
+      "name": "quiz",
+      "overflow": false,
+      "broken": [],
+      "heading": "오늘의 퀴즈"
+    },
+    {
+      "name": "attendance",
+      "overflow": false,
+      "broken": [],
+      "heading": "매달의 출석현황"
+    },
+    {
+      "name": "meal",
+      "overflow": false,
+      "broken": [],
+      "heading": "급식메뉴"
+    },
+    {
+      "name": "settings",
+      "overflow": false,
+      "broken": [],
+      "heading": "설정"
+    },
+    {
+      "name": "game",
+      "overflow": false,
+      "broken": [],
+      "heading": "심부름 지폐 계산"
+    },
+    {
+      "name": "game-play",
+      "wallet": 3
+    },
+    {
+      "name": "goal-art-닌텐도 스위치 사기",
+      "actual": "console"
+    },
+    {
+      "name": "goal-art-Nintendo SWITCH 2",
+      "actual": "console"
+    },
+    {
+      "name": "goal-art-자전거 사기",
+      "actual": "bicycle"
+    },
+    {
+      "name": "goal-art-헤드폰 사기",
+      "actual": "headphones"
+    },
+    {
+      "name": "goal-art-운동화 사기",
+      "actual": "shoes"
+    },
+    {
+      "name": "goal-art-제주도 여행",
+      "actual": "travel"
+    },
+    {
+      "name": "goal-art-책 사기",
+      "actual": "books"
+    },
+    {
+      "name": "goal-art-책상 사기",
+      "actual": "custom"
+    },
+    {
+      "name": "goal-art-나만의 꿈",
+      "actual": "custom"
+    },
+    {
+      "name": "deposit-goal-art",
+      "count": 2
+    },
+    {
+      "name": "quiz-answer",
+      "feedback": true
+    },
+    {
+      "name": "avatar-change",
+      "updated": true
+    },
+    {
+      "name": "parent-home",
+      "overflow": false,
+      "broken": [],
+      "heading": "이준 보호자님 🌱"
+    },
+    {
+      "name": "parent-missions",
+      "overflow": false,
+      "broken": [],
+      "heading": "미션 관리"
+    },
+    {
+      "name": "parent-children",
+      "overflow": false,
+      "broken": [],
+      "heading": "자녀 계정 관리"
+    },
+    {
+      "name": "parent-notifications",
+      "overflow": false,
+      "broken": [],
+      "heading": "알림함"
+    },
+    {
+      "name": "parent-meal",
+      "overflow": false,
+      "broken": [],
+      "heading": "급식메뉴"
+    },
+    {
+      "name": "parent-settings",
+      "overflow": false,
+      "broken": [],
+      "heading": "설정"
+    },
+    {
+      "name": "parent-form",
+      "overflow": false
+    },
+    {
+      "name": "home-320",
+      "overflow": false,
+      "broken": [],
+      "heading": "이준 어린이 🌱"
+    },
+    {
+      "name": "settings-320",
+      "overflow": false,
+      "broken": [],
+      "heading": "설정"
+    },
+    {
+      "name": "home-360",
+      "overflow": false,
+      "broken": [],
+      "heading": "이준 어린이 🌱"
+    },
+    {
+      "name": "settings-360",
+      "overflow": false,
+      "broken": [],
+      "heading": "설정"
+    },
+    {
+      "name": "home-480",
+      "overflow": false,
+      "broken": [],
+      "heading": "이준 어린이 🌱"
+    },
+    {
+      "name": "settings-480",
+      "overflow": false,
+      "broken": [],
+      "heading": "설정"
+    },
+    {
+      "name": "home-1280",
+      "overflow": false,
+      "broken": [],
+      "heading": "이준 어린이 🌱"
+    },
+    {
+      "name": "settings-1280",
+      "overflow": false,
+      "broken": [],
+      "heading": "설정"
+    }
+  ],
+  "errors": []
+}

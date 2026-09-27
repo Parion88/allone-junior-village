@@ -1,3 +1,4 @@
+import alloneFamily from "../assets/friends/allone-family.png";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchProfiles, pinLogin } from "../api/auth";
@@ -126,6 +127,7 @@ export default function ProfileSelect() {
       ) : (
         <div className="flex flex-1 flex-col px-5 pb-6 pt-2">
           <div className="mb-4 text-center">
+            <img src={alloneFamily} alt="함께하는 다섯 올원프렌즈" className="login-friends" />
             <h2 className="text-lg font-extrabold text-[#223127]">누구로 들어갈까요?</h2>
             <p className="mt-1 text-sm text-[#89938C]">내 프로필을 골라주세요</p>
           </div>

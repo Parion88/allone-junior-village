@@ -40,3 +40,35 @@
 ## 미리보기
 
 [메인](preview-home.png) · [미션](preview-missions.png) · [저축](preview-savings.png) · [교육](preview-education.png) · [부모 홈](preview-parent.png)
+
+## 추가 캐릭터와 목표별 이미지 (후속 수정)
+
+사용자가 추가한 `character_all.png`, `character1.png`~`character5.png`를 `client/src/assets/friends/`에 원본 그대로 저장했습니다. 다섯 캐릭터의 총 15가지 동작을 원본 좌표로 각각 표시합니다. 기존 `oli-1`~`kori-3` 프로필 ID는 유지되며 이제 각 ID가 서로 다른 원본 동작을 보여줍니다.
+
+- 로그인·부모 홈: 단체 캐릭터
+- 인사·부모 미션 관리: 인사/정장 올리
+- 교육: 학사모 원이
+- 저축 안내: 하트 단지
+- 용돈 기록: 휴대폰 달리
+- 미션·알림: 확성기 코리
+- 미션 제목이 독서·학습·저축·가족·운동이면 해당 활동에 맞는 안내 캐릭터 선택
+
+`goalVisuals.js`가 목표 제목을 우선으로 해석합니다. 알아볼 수 없는 제목은 기존 이모지에 대응하는 그림, 그마저 없으면 선택된 이모지를 표시합니다. DB 스키마와 저장 API는 변경하지 않았습니다. 입력 폼의 실시간 미리보기, 홈, 목표 목록, 저금 완료 알림이 같은 규칙을 사용합니다.
+
+| 목표 이름 예시 | 표시 이미지 |
+| --- | --- |
+| 닌텐도 스위치 / Nintendo Switch 2 / 게임기 | 파랑·빨강 컨트롤러의 휴대용 게임기 |
+| 자전거 사기 | 민트색 자전거 |
+| 헤드폰 / 헤드셋 | 헤드폰 |
+| 운동화 / 신발 | 운동화 |
+| 제주도 여행 / 항공 | 비행기와 여행가방 |
+| 책 사기 / 독서 / 전집 | 책 |
+| 책상 사기 / MacBook 등 미지원 항목 | 선택한 기본 이모지 (책으로 오인하지 않음) |
+
+### 목표 이미지 제작
+
+`client/src/assets/village/goal-items.webp`는 built-in ImageGen으로 생성한 투명 아틀라스를 무손실 WebP로 저장한 것입니다. `GoalIllustration.jsx`가 객체별 영역을 원래 비율대로 표시합니다. 생성 프롬프트:
+
+> Create a SINGLE transparent game UI icon atlas for a children's savings app. Reference image is STYLE only: soft friendly colorful toy-like 3D, glossy warm rendering. No characters required. Output 1536x1024 landscape, EXACT 3 columns by 2 rows of equally sized square 512x512 cells. One object centered within each cell, full object visible, ample padding 15%, objects never crossing cell boundary. Top-left: recognizable handheld Nintendo Switch-style gaming console, wide black screen with cyan-blue LEFT controller and coral-red RIGHT controller, joysticks and buttons, screen showing a simple green hill, no text or logos. Top-middle: mint turquoise child's bicycle with two wheels, yellow basket. Top-right: lavender and cream over-ear headphones. Bottom-left: pair of sporty mint and cream sneakers. Bottom-middle: cute white passenger airplane with blue wings and small yellow travel suitcase as a combined travel icon. Bottom-right: stack of three colorful books, top green book open. Consistent perspective slightly three-quarter, soft studio lighting. Genuine transparent alpha background, no checkerboard or colored backgrounds, no panels, no labels, no borders, no typography. Asset is ONE coherent 6-cell atlas.
+
+후속 검증: 모의 API로 17개 화면과 기존 주요 동작을 확인했고 JS 예외/가로 넘침이 없었습니다. 목표 입력 9가지, 제목 우선순위, 영문 단어 경계, 미지원 목표의 이모지 유지, 저금 완료 화면의 게임기 표시를 확인했습니다. 결과는 `character-validation.json`에 있습니다. [추가 캐릭터 선택 화면](preview-characters.png).

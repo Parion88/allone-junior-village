@@ -1,3 +1,6 @@
+import FriendCharacter from "../../components/common/FriendCharacter";
+import GoalIllustration from "../../components/common/GoalIllustration";
+import { missionFriend } from "../../data/friendCharacters";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../store/authStore";
@@ -48,26 +51,26 @@ export default function ChildDashboard() {
         <button onClick={() => navigate("/child/missions")} className="text-link">전체보기 ›</button></div>
       <p className="section-description">작은 도전을 모아 멋진 습관을 만들어요.</p>
       <div className="challenge-grid">{challenges.map((item) => <button key={item.tag} onClick={() => navigate(item.to)} className={`challenge-card scene-${item.tone}`}>
-        <VillageCharacter pose={item.pose} decorative /><span className="challenge-tag">{item.tag}</span><h3>{item.title}</h3><span className="challenge-meta">{item.meta}<b>›</b></span>
+        <FriendCharacter {...(item.tag === "오늘의 미션" ? missionFriend(missions[0]?.title) : item.tag === "생활 계산" ? {name:"oli",pose:2} : {name:"woni",pose:2})} decorative /><span className="challenge-tag">{item.tag}</span><h3>{item.title}</h3><span className="challenge-meta">{item.meta}<b>›</b></span>
       </button>)}</div>
     </section>
     <button onClick={() => navigate("/child/education")} className="village-feature scene-sky">
-      <div><span className="village-eyebrow">토끼의 작은 도서관</span><h2>금융 교육</h2><p>재미있는 돈 이야기로<br/>똑똑한 습관을 배워요!</p><span className="feature-action">배우러 가기 ›</span></div>
-      <VillageCharacter pose="learn" decorative />
+      <div><span className="village-eyebrow">원이의 작은 도서관</span><h2>금융 교육</h2><p>재미있는 돈 이야기로<br/>똑똑한 습관을 배워요!</p><span className="feature-action">배우러 가기 ›</span></div>
+      <FriendCharacter name="woni" pose={2} decorative />
     </button>
     <section className="savings-feature scene-mint">
       <div className="section-heading"><h2>나의 저축 목표</h2><button className="text-link" onClick={() => navigate("/child/savings")}>{primaryGoal ? "목표 보기" : "목표 만들기"} ›</button></div>
       <div className="savings-feature-body"><div>
-        <h3>{primaryGoal ? `${primaryGoal.emoji || "🎯"} ${primaryGoal.title}` : loading ? "목표를 불러오고 있어요" : loadError ? "저축 목표를 확인해요" : "어떤 꿈을 모아볼까요?"}</h3>
+        <h3>{primaryGoal ? primaryGoal.title : loading ? "목표를 불러오고 있어요" : loadError ? "저축 목표를 확인해요" : "어떤 꿈을 모아볼까요?"}</h3>
         {primaryGoal ? <><div className="savings-progress" role="progressbar" aria-label={primaryGoal.title} aria-valuenow={goalPct} aria-valuemin={0} aria-valuemax={100}><span style={{width: `${goalPct}%`}}/></div>
           <p>{primaryGoal.currentAmount.toLocaleString("ko-KR")} / {primaryGoal.targetAmount.toLocaleString("ko-KR")}원</p><strong className="savings-percent">{goalPct}%만큼 가까워졌어요</strong></> : <p>작은 저축부터 시작해봐요.<br/>친구들이 함께 응원할게요!</p>}
-      </div><VillageCharacter pose="bicycle" decorative /></div>
+      </div>{primaryGoal ? <GoalIllustration title={primaryGoal.title} emoji={primaryGoal.emoji} /> : <FriendCharacter name="danji" pose={0} decorative />}</div>
     </section>
     <div className="home-quick-grid">
       <button onClick={() => navigate("/meal")} className="quick-card scene-peach"><VillageCharacter pose="meal" decorative/><span>우리 학교</span><h3>오늘 급식 ›</h3></button>
       <button onClick={() => navigate("/child/game")} className="quick-card scene-lavender"><VillageCharacter pose="celebrate" decorative/><span>머니 챌린지</span><h3>게임 한 판 ›</h3></button>
     </div>
-    <Card><div className="section-heading"><div><span className="village-eyebrow">차곡차곡 용돈 기록</span><h2>최근 거래</h2></div><VillageCharacter pose="save" size={52} decorative/></div>
+    <Card><div className="section-heading"><div><span className="village-eyebrow">차곡차곡 용돈 기록</span><h2>최근 거래</h2></div><FriendCharacter name="dari" pose={1} size={52} decorative/></div>
       {recentTx.length ? <ul className="transaction-list">{recentTx.map((t) => { const income = t.toUserId === user.id; return <li key={t.id}><div><p>{t.memo || t.type}</p><small>{income ? "받은 용돈" : "사용한 금액"}</small></div><strong className={income ? "income" : ""}>{income ? "+" : "-"}{t.amount.toLocaleString("ko-KR")}원</strong></li>; })}</ul> : <p className="empty-record">{loading ? "용돈 기록을 불러오고 있어요." : loadError ? "용돈 기록을 불러오지 못했어요." : "아직 거래가 없어요. 첫 용돈을 기다려볼까요?"}</p>}
     </Card>
   </div>;
