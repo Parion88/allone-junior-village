@@ -1,3 +1,4 @@
+import VillageCharacter from "./VillageCharacter";
 const COLORS = ["#2fae55", "#ffd166", "#ef476f", "#118ab2", "#a78bfa", "#f78c6b"];
 
 /**
@@ -25,7 +26,8 @@ export default function ConfettiReward({ emoji = "🎉", title, subtitle, onClos
         className="relative bg-white rounded-3xl px-8 py-10 mx-6 text-center shadow-card-lg animate-pop-in max-w-xs"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="text-6xl mb-3 animate-bounce-slow">{emoji}</div>
+        <VillageCharacter pose="celebrate" size={140} decorative />
+        <div className="text-2xl mb-3">{emoji}</div>
         <p className="text-xl font-extrabold text-gray-800 mb-1 whitespace-pre-line">{title}</p>
         {subtitle && <p className="text-gray-500 font-medium whitespace-pre-line">{subtitle}</p>}
         <button

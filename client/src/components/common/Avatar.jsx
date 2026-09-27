@@ -1,3 +1,4 @@
+import VillageCharacter from "./VillageCharacter";
 import { AVATAR_CHARACTER_MAP } from "../../data/avatarCharacters";
 
 /**
@@ -7,6 +8,8 @@ import { AVATAR_CHARACTER_MAP } from "../../data/avatarCharacters";
  */
 export default function Avatar({ value, className = "w-8 h-8", textClassName = "" }) {
   const character = AVATAR_CHARACTER_MAP.get(value);
+
+  if (character?.pose) return <span className={`inline-flex rounded-full bg-white shrink-0 ${className}`}><VillageCharacter pose={character.pose} className="avatar-friend" label={character.name} /></span>;
 
   if (character?.src) {
     return (

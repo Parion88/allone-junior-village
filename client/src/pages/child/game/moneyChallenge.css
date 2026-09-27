@@ -273,3 +273,19 @@
 .mc-school-card { margin-bottom: 12px; padding: 12px; display: flex; gap: 9px; align-items: center; border: 1px solid #e8dcaa; border-radius: 16px; background: linear-gradient(160deg, #fffbe8, #fff2c4); text-align: left; font-size: 28px; box-shadow: 0 4px 12px rgba(150,120,20,.1); }
 .mc-school-card div { display: grid; gap: 2px; font-size: 9px; }
 .mc-school-card span { color: #786b38; font-weight: 750; }
+
+/* The same village world continues through difficulty, play, results and ranking. */
+.mc-screen { background: #fafcf7; padding: 20px 18px 32px; }
+.mc-intro { background: linear-gradient(#fffaf0,#f4faec); }
+.mc-difficulty-card { border-radius: 24px; box-shadow: 0 5px 16px #4663260c; }
+.mc-level-1 { background: linear-gradient(120deg,#f2f9e9,#e6f4d9); }
+.mc-level-2 { background: linear-gradient(120deg,#fff9e6,#fff0be); }
+.mc-level-3 { background: linear-gradient(120deg,#f4efff,#e9e0ff); }
+.mc-primary { background: linear-gradient(120deg,#198858,#2f9c60); box-shadow: 0 6px 15px #26774224; border-radius: 18px; }
+.mc-form-card, .mc-mission, .mc-wallet, .mc-modal, .mc-rank-row { border-radius: 24px; }
+.mc-game { background: #f6faef; }
+.mc-header { background: #f0f8e8; color: #204b32; }
+.mc-modal { background: linear-gradient(#fffef8,#f5faed); }
+.mc-hint { background: #fff9df; color: #746022; }
+.mc-root :is(button,input):focus-visible { outline: 3px solid #d5a431; outline-offset: 3px; }
+.mc-difficulty-card { grid-template-columns: 70px minmax(0,1fr) 14px; gap: 9px; padding: 14px 12px; }

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { fetchProfiles, pinLogin } from "../api/auth";
 import { useAuthStore } from "../store/authStore";
 import Avatar from "../components/common/Avatar";
-import alloneFriends from "../assets/characters/allone-friends.png";
+import alloneFriends from "../assets/village/village-theme.webp";
 
 const PIN_LENGTH = 4;
 
@@ -111,18 +111,13 @@ export default function ProfileSelect() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-gradient-to-b from-[#F7FFF3] via-[#FFFDF7] to-white">
-      <div className="relative overflow-hidden px-5 pb-4 pt-7 text-center">
-        <div className="absolute left-[-28px] top-8 h-24 w-24 rounded-full bg-[#DDF7E7]/70" />
-        <div className="absolute right-[-18px] top-20 h-20 w-20 rounded-full bg-[#FFF0B8]/70" />
-        <p className="relative text-xs font-extrabold tracking-[0.18em] text-junior-600">NH ALLONE JUNIOR</p>
-        <h1 className="relative mt-2 text-3xl font-black tracking-tight text-[#223127]">주니어빌리지</h1>
-        <p className="relative mt-2 text-sm font-medium text-[#617066]">올원프렌즈와 함께 돈을 배우고, 모으고, 성장해요</p>
-        <div className="relative mx-auto mt-3 flex h-44 max-w-sm items-end justify-center overflow-hidden rounded-[32px] bg-gradient-to-br from-[#E9F9EC] via-[#FFFBE8] to-[#EAF5FF] shadow-card ring-1 ring-white">
-          <img src={alloneFriends} alt="올원프렌즈" className="max-h-[160px] w-auto object-contain drop-shadow-sm" />
-          <span className="absolute left-4 top-4 rounded-full bg-white/85 px-3 py-1.5 text-xs font-extrabold text-junior-700 shadow-sm">우리랑 같이 가자! ✨</span>
-        </div>
-      </div>
+    <div className="login-page flex min-h-screen flex-col">
+      <section className="login-hero">
+        <p className="nh-wordmark">NH <b>올원뱅크</b></p>
+        <h1>우리 아이의 첫 금융 마을</h1>
+        <p>배우고, 모으고, 꿈꾸는 올원 주니어빌리지</p>
+        <img src={alloneFriends} alt="세 친구가 반기는 올원 주니어빌리지" fetchPriority="high" />
+      </section>
 
       {mode === "pin" && selected ? (
         <PinPad profile={selected} onBack={() => setMode("list")} onSuccess={handleSuccess} />

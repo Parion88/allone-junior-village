@@ -1,3 +1,4 @@
+import VillageCharacter from "../../../components/common/VillageCharacter";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import BackHeader from "../../../components/common/BackHeader";
@@ -16,7 +17,7 @@ export default function EducationHome() {
     <div>
       <BackHeader title="금융교육" tone="junior" />
       <div className="p-4 flex flex-col gap-4">
-        <Card className="bg-gradient-to-br from-junior-500 to-junior-700 text-white text-center py-6">
+        <Card className="education-summary text-white text-center py-6">
           {summary ? (
             <>
               <p className="text-4xl mb-1">{summary.levelEmoji || "🙂"}</p>
@@ -37,21 +38,21 @@ export default function EducationHome() {
 
         <div className="flex flex-col gap-3">
           <Card onClick={() => navigate("/child/education/learn")} className="flex items-center gap-3">
-            <span className="text-3xl">📖</span>
+            <VillageCharacter pose="learn" size={68} decorative />
             <div>
               <p className="font-bold text-gray-800">배움 콘텐츠</p>
               <p className="text-xs text-gray-400">돈과 은행에 대해 재미있게 배워요</p>
             </div>
           </Card>
           <Card onClick={() => navigate("/child/education/quiz")} className="flex items-center gap-3">
-            <span className="text-3xl">❓</span>
+            <VillageCharacter pose="celebrate" size={68} decorative />
             <div>
               <p className="font-bold text-gray-800">오늘의 퀴즈</p>
               <p className="text-xs text-gray-400">하루 3문제, 다 풀면 포인트 획득!</p>
             </div>
           </Card>
           <Card onClick={() => navigate("/child/education/attendance")} className="flex items-center gap-3">
-            <span className="text-3xl">📅</span>
+            <VillageCharacter pose="hello" size={68} decorative />
             <div>
               <p className="font-bold text-gray-800">매달의 출석현황</p>
               <p className="text-xs text-gray-400">이번 달 학습 기록을 확인해요</p>

@@ -1,4 +1,6 @@
-import { Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import BottomNavigation from "./components/common/BottomNavigation";
+import { Routes, Route, useLocation } from "react-router-dom";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 
 import ProfileSelect from "./pages/ProfileSelect";
@@ -19,8 +21,10 @@ import TodayQuiz from "./pages/child/education/TodayQuiz";
 import AttendanceCalendar from "./pages/child/education/AttendanceCalendar";
 
 export default function App() {
+  const { pathname } = useLocation();
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
   return (
-    <div className="app-shell">
+    <div className={`app-shell ${pathname !== "/" && pathname !== "/child/game" ? "has-bottom-nav" : ""}`}>
       <Routes>
         <Route path="/" element={<ProfileSelect />} />
 
@@ -44,6 +48,7 @@ export default function App() {
 
         <Route path="*" element={<ProfileSelect />} />
       </Routes>
+      <BottomNavigation />
     </div>
   );
 }

@@ -5,6 +5,7 @@ import dari from "../assets/characters/dari.webp";
 import kori from "../assets/characters/kori.webp";
 
 export const AVATAR_CHARACTERS = [
+  ...Object.entries({ hello: "노란 새 · 인사", learn: "토끼 · 독서", save: "초록 새 · 저축", celebrate: "노란 새 · 응원", bicycle: "토끼 · 자전거", meal: "초록 새 · 도시락" }).map(([pose, name]) => ({ id: `village-${pose}`, pose, name })),
   { id: "oli-1", src: oli, name: "올리" },
   { id: "oli-2", src: oli, name: "올리" },
   { id: "oli-3", src: oli, name: "올리" },

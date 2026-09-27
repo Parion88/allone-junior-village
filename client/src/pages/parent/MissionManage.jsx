@@ -112,7 +112,7 @@ export default function MissionManage() {
                   placeholder="보상 금액"
                   value={form.rewardAmount}
                   onChange={(e) => setForm({ ...form, rewardAmount: e.target.value })}
-                  className="tap-target border-2 border-gray-200 rounded-xl px-3 py-3 flex-1"
+                  className="tap-target border-2 border-gray-200 rounded-xl px-3 py-3 flex-1 min-w-0"
                 />
                 <select
                   value={form.repeat}

@@ -1,3 +1,4 @@
+import Avatar from "./Avatar";
 import { AVATAR_CHARACTERS } from "../../data/avatarCharacters";
 
 const EMOJIS = ["🦁", "🐰", "🐻", "🐼", "🐯", "🐸", "🐵", "🐶", "🐱", "🦊", "🐨", "🐷", "🐹", "🦄", "🐧", "🐢", "🦖", "🐙", "🌟", "🍀"];
@@ -16,13 +17,15 @@ export default function EmojiPicker({ value, onChange, mode = "emoji" }) {
         {AVATAR_CHARACTERS.map((c) => (
           <button
             key={c.id}
+            type="button"
+            aria-pressed={value === c.id}
             onClick={() => onChange(c.id)}
             aria-label={c.name}
             className={`tap-target rounded-xl p-1 flex items-center justify-center border-2 transition-colors ${
               value === c.id ? "border-junior-500 bg-junior-50" : "border-gray-100 hover:border-gray-200"
             }`}
           >
-            <img src={c.src} alt={c.name} className="w-10 h-10 rounded-full object-cover" />
+            <Avatar value={c.id} className="w-12 h-12" />
           </button>
         ))}
       </div>
@@ -35,6 +38,7 @@ export default function EmojiPicker({ value, onChange, mode = "emoji" }) {
       {emojis.map((e) => (
         <button
           key={e}
+          type="button"
           onClick={() => onChange(e)}
           className={`tap-target text-2xl rounded-xl py-2 flex items-center justify-center border-2 transition-colors ${
             value === e ? "border-junior-500 bg-junior-50" : "border-gray-100 hover:border-gray-200"

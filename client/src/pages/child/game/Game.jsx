@@ -1,3 +1,4 @@
+import VillageCharacter from "../../../components/common/VillageCharacter";
 import { useEffect, useRef, useState } from "react";
 import BackHeader from "../../../components/common/BackHeader";
 import SchoolPicker from "../../../components/common/SchoolPicker";
@@ -46,7 +47,7 @@ function SchoolSetup({ onDone }) {
 
   return (
     <div className="mc-screen mc-intro">
-      <div className="mc-village">🏘️</div>
+      <VillageCharacter pose="save" size={110} decorative />
       <div className="mc-badge">주니어빌리지 머니챌린지</div>
       <h1>
         딱! 맞춰
@@ -92,7 +93,7 @@ function Difficulty({ nickname, school, onStart, onRanking }) {
           const d = DIFFICULTIES[level];
           return (
             <button key={level} className={`mc-difficulty-card mc-level-${level}`} onClick={() => onStart(level)}>
-              <span className="mc-diff-icon">{d.icon}</span>
+              <VillageCharacter pose={level === 1 ? "hello" : level === 2 ? "save" : "celebrate"} size={70} decorative />
               <div>
                 <small>LEVEL {level}</small>
                 <strong>{d.name}</strong>
@@ -281,7 +282,7 @@ function ScoreModal({ result, data, onNext, last }) {
   return (
     <div className="mc-overlay">
       <div className="mc-modal">
-        <div className="mc-modal-icon">{result.perfect ? "🏆" : "🎉"}</div>
+        <VillageCharacter pose="celebrate" size={110} decorative />
         <h2>{result.perfect ? "PERFECT!" : "정답!"}</h2>
         <p>
           {result.perfect
@@ -470,7 +471,8 @@ function Final({ result, nickname, school, onReplay, onRanking, onHome }) {
 
   return (
     <div className="mc-screen mc-final">
-      <div className="mc-final-icon">{g.icon}</div>
+      <VillageCharacter pose="celebrate" size={128} decorative />
+      <div className="mc-badge">{g.icon} 잘했어요!</div>
       <div className="mc-badge">LEVEL {result.difficulty} 결과</div>
       <h1>{g.name}</h1>
       <div className="mc-final-score">
@@ -674,7 +676,7 @@ export default function Game() {
 
   return (
     <div>
-      <BackHeader title="심부름 지폐 계산" tone="junior" />
+      <BackHeader title="심부름 지폐 계산" tone="junior" showIntro={phase !== "playing"} />
       <div className="mc-root">
         {phase === "loading" && <p className="text-center text-gray-400 py-16">불러오는 중...</p>}
 
