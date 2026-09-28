@@ -58,6 +58,13 @@ export default function EducationHome() {
               <p className="text-xs text-gray-400">이번 달 학습 기록을 확인해요</p>
             </div>
           </Card>
+          <Card onClick={() => window.open( "https://youthedu.nonghyup.com/Intro/Location.jsp", "_blank", "noopener,noreferrer" ) } className="flex items-center gap-3" > 
+            <span className="text-3xl">🏦</span> 
+            <div> 
+              <p className="font-bold text-gray-800">NH 청소년 금융교육센터</p>
+              <p className="text-xs text-gray-400">교육 일정 및 교육 신청을 해보아요!</p> 
+            </div> 
+          </Card>
         </div>
       </div>
     </div>

@@ -54,10 +54,12 @@ export default function ChildDashboard() {
         <FriendCharacter {...(item.tag === "오늘의 미션" ? missionFriend(missions[0]?.title) : item.tag === "생활 계산" ? {name:"oli",pose:2} : {name:"woni",pose:2})} decorative /><span className="challenge-tag">{item.tag}</span><h3>{item.title}</h3><span className="challenge-meta">{item.meta}<b>›</b></span>
       </button>)}</div>
     </section>
+    {/*
     <button onClick={() => navigate("/child/education")} className="village-feature scene-sky">
       <div><span className="village-eyebrow">원이의 작은 도서관</span><h2>금융 교육</h2><p>재미있는 돈 이야기로<br/>똑똑한 습관을 배워요!</p><span className="feature-action">배우러 가기 ›</span></div>
       <FriendCharacter name="woni" pose={2} decorative />
     </button>
+    */}
     <section className="savings-feature scene-mint">
       <div className="section-heading"><h2>나의 저축 목표</h2><button className="text-link" onClick={() => navigate("/child/savings")}>{primaryGoal ? "목표 보기" : "목표 만들기"} ›</button></div>
       <div className="savings-feature-body"><div>
