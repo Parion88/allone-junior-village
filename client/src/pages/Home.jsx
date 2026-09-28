@@ -36,7 +36,9 @@ export default function Home() {
         <div className="section-heading"><div><span className="village-eyebrow">우리 가족의 금융 생활</span><h2>우리 아이들</h2></div>
           <button onClick={() => navigate("/parent/children")} className="text-link">자녀 관리 ›</button></div>
         <ParentDashboard />
+        {/*
         <section className="family-welcome"><img src={alloneFamily} alt="올리, 원이, 단지, 달리, 코리가 함께 응원해요" /><p>다섯 친구와 함께 키우는 좋은 금융 습관</p></section>
+        */}
         <button onClick={() => navigate("/meal")} className="village-feature scene-peach"><div><h2>우리 학교 급식</h2><p>아이의 오늘 식단을 확인해요</p><span className="feature-action">급식 보기 ›</span></div><VillageCharacter pose="meal" decorative /></button>
       </> : <ChildDashboard />}
       <button onClick={handleLogout} className="logout-link">로그아웃</button>
