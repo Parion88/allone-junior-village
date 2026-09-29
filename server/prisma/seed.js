@@ -55,7 +55,7 @@ async function main() {
   const parent = await prisma.user.create({
     data: {
       role: "PARENT",
-      name: "김민정",
+      name: "김올원",
       avatarEmoji: "👩",
       pinHash: await hash("1234"),
     },
