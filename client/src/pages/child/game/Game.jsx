@@ -428,7 +428,7 @@ function GamePlay({ nickname, difficulty, onFinish, onExit }) {
         <div className="mc-game-top">
           <Timer startAt={startAt} stoppedAt={result ? startAt + result.seconds * 1000 : null} />
           <div className="mc-progress">
-            <div style={{ width: `${round * 10}%` }} />
+            <div style={{ width: `${(round / TOTAL_ROUNDS) * 100}%` }} />
           </div>
         </div>
 
