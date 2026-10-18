@@ -4,7 +4,7 @@
  * 문제 생성/채점/등급 계산 로직을 그대로 포팅했다 (프론트엔드 자체 채점 방식은 원본과 동일하게 유지).
  */
 
-export const TOTAL_ROUNDS = 10;
+export const TOTAL_ROUNDS = 5;
 
 export const MONEY = [
   { value: 50000, type: "bill", label: "50,000원" },
@@ -269,9 +269,9 @@ export function calcScore({ difficulty, seconds, usedCount, minCount, wrongAttem
 
 export function grade(score, difficulty) {
   const normalized = score / (difficulty === 3 ? 1.2 : difficulty === 2 ? 1.1 : 1);
-  if (normalized >= 85000) return { icon: "👑", name: "올원 머니왕" };
-  if (normalized >= 72000) return { icon: "🏆", name: "머니 마스터" };
-  if (normalized >= 60000) return { icon: "⭐", name: "돈 박사" };
-  if (normalized >= 45000) return { icon: "🐥", name: "돈 계산가" };
+  if (normalized >= 42500) return { icon: "👑", name: "올원 머니왕" };
+  if (normalized >= 36000) return { icon: "🏆", name: "머니 마스터" };
+  if (normalized >= 30000) return { icon: "⭐", name: "돈 박사" };
+  if (normalized >= 22500) return { icon: "🐥", name: "돈 계산가" };
   return { icon: "🌱", name: "돈 새싹" };
 }
